@@ -1,50 +1,35 @@
----
-artifact: 3 — Lớp kiến trúc dữ liệu
-bai-tap: 2 — Thiết kế giải pháp
-demo: ./demo.md
----
+# Lớp kiến trúc dữ liệu
 
-# card.md — Lớp kiến trúc dữ liệu
-
-**Tình huống xử lý**: T-__  
+**Tình huống xử lý**: T-01 
 Xem `../../1-map-and-format.md` Phần A.
 
 ---
 
 ## 1. Giải pháp là gì?
 
-[Viết 2-3 câu. Nói rõ hệ thống cần thêm nguồn dữ liệu, bước kiểm tra, cách chuyển câu hỏi hoặc cách ghi lại lỗi nào.]
-
-Ví dụ:
-
-> Với câu hỏi về học bổng, hệ thống phải tra nguồn tuyển sinh chính thức trước khi AI trả lời. Nếu nguồn không có dữ liệu hoặc bị lỗi, AI không được đoán mà chuyển câu hỏi cho tư vấn viên.
+> Hệ thống cần tra cứu các nguồn dữ liệu chính thức như trang web tuyển sinh hoặc tài liệu từ các tổ chức chính thức trước khi AI trả lời các câu hỏi liên quan đến thông tin quan trọng. Nếu không có dữ liệu hoặc nguồn có lỗi, AI sẽ không đưa ra câu trả lời và chuyển câu hỏi đến tư vấn viên.
 
 ---
 
 ## 2. Vì sao sửa ở lớp kiến trúc dữ liệu?
 
-[Chọn 1-2 ý đúng với giải pháp của nhóm.]
-
-- Nguyên nhân chính là thiếu nguồn đúng hoặc nguồn cũ.
-- AI đang phải tự nhớ thông tin thay vì đọc từ nguồn đáng tin cậy.
-- Cần kiểm tra dữ liệu trước khi câu trả lời được tạo ra.
-- Cần ghi lại lỗi để nhóm biết lỗi nào lặp lại nhiều.
+- Nguyên nhân chính là AI đang phải tự dựa vào thông tin, dẫn đến việc bịa thông tin hoặc không có dữ liệu chính thức.
+- Cần có cơ chế kiểm tra dữ liệu trước khi trả lời để đảm bảo tính chính xác và độ tin cậy.
+- Việc ghi lại lỗi sẽ giúp nhóm phát hiện những lỗi thường gặp và cải thiện hệ thống.
 
 **Hành động phòng vệ chính**:
-
-- [ ] Ngăn lỗi bằng nguồn dữ liệu đúng
-- [ ] Phát hiện khi nguồn thiếu hoặc lỗi
-- [ ] Khắc phục bằng cách chuyển sang người thật
-- [ ] Ghi lại lỗi để cải thiện sau
+- [x] Ngăn lỗi bằng nguồn dữ liệu chính thức.
+- [x] Phát hiện khi nguồn thiếu hoặc lỗi.
+- [x] Khắc phục bằng cách chuyển sang người thật.
+- [x] Ghi lại lỗi để cải thiện sau.
 
 ---
 
 ## 3. Demo nằm ở đâu?
 
-**File demo**: [`demo.md`](./demo.md)
+**File demo**: [demo.md](./demo.md)
 
-Demo cần có:
-
+**Demo cần có**:
 - Sơ đồ cách dữ liệu đi qua hệ thống
 - Nguồn dữ liệu chính thức
 - Bước kiểm tra trước khi AI trả lời
@@ -56,21 +41,19 @@ Demo cần có:
 ## 4. Tác dụng phụ
 
 **Có thể gây vấn đề gì?**
-
-[Ví dụ: trả lời chậm hơn, phụ thuộc vào nguồn dữ liệu, tốn công duy trì, hệ thống phức tạp hơn.]
+> Việc truy cập và kiểm tra dữ liệu từ các nguồn chính thức có thể làm cho hệ thống trở nên chậm hơn, phụ thuộc vào nguồn và tốn công duy trì.
 
 **Nhóm giảm vấn đề đó bằng cách nào?**
-
-[Ví dụ: lưu tạm dữ liệu phổ biến, có thông báo khi nguồn lỗi, đặt người phụ trách cập nhật nguồn, giới hạn chỉ áp dụng với câu hỏi rủi ro cao.]
+> Lưu trữ tạm dữ liệu phổ biến và thông báo khi nguồn dữ liệu có lỗi, có kế hoạch để người phụ trách cập nhật nguồn thông tin chính thức thường xuyên.
 
 ---
 
 ## 5. Checklist trước khi nộp
 
-- [ ] Sơ đồ cho thấy dữ liệu đi từ đâu đến đâu.
-- [ ] Có bước kiểm tra nguồn trước khi AI trả lời.
-- [ ] Có cách xử lý khi không có dữ liệu.
-- [ ] Có cách chuyển sang người thật với tình huống rủi ro cao.
-- [ ] Có cách biết lỗi này có đang lặp lại không.
+- [x] Sơ đồ cho thấy dữ liệu đi từ đâu đến đâu.
+- [x] Có bước kiểm tra nguồn trước khi AI trả lời.
+- [x] Có cách xử lý khi không có dữ liệu.
+- [x] Có cách chuyển sang người thật với tình huống rủi ro cao.
+- [x] Có cách biết lỗi này có đang lặp lại không.
 
 **Người phụ trách**: [Tên thành viên]

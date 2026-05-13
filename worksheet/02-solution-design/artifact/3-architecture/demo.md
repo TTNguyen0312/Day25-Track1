@@ -1,54 +1,38 @@
----
-artifact: 3 — Demo kiến trúc dữ liệu
-format: sơ đồ xử lý + bảng thành phần
----
 
-# demo.md — Demo kiến trúc dữ liệu
+# Demo Kiến Trúc Dữ Liệu
 
 File này dùng để đặt sơ đồ và mô tả ngắn cách hệ thống giảm rủi ro.
-
----
 
 ## 1. Sơ đồ cách hệ thống xử lý
 
 ```text
-[Đặt sơ đồ ở đây]
-
-Ví dụ khung:
-
-Người dùng hỏi
-  -> Phân loại câu hỏi
-  -> Có phải câu hỏi rủi ro cao không?
-      -> Không: AI trả lời như bình thường
-      -> Có: Tra nguồn chính thức
-          -> Có dữ liệu: AI trả lời kèm nguồn
-          -> Không có dữ liệu: Chuyển sang người thật
-  -> Ghi lại để theo dõi lỗi
+[User's question]
+  -> Classify the question
+  -> Is it a high-risk question?
+      -> No: AI answers as usual
+      -> Yes: Check official source
+          -> If data available: AI answers with the source
+          -> If no data: Transfer to human
+  -> Log the error for tracking
 ```
-
----
 
 ## 2. Thành phần chính
 
-| Thành phần | Nhận gì? | Làm gì? | Trả ra gì? |
-|---|---|---|---|
-| Phân loại câu hỏi | Câu hỏi của người dùng | Xác định có rủi ro cao không | Trả lời thường / cần kiểm tra nguồn |
-| Nguồn chính thức | Chủ đề cần kiểm tra | Tìm dữ liệu mới nhất | Thông tin + nguồn |
-| Bộ xử lý khi thiếu nguồn | Kết quả không có dữ liệu | Không cho AI đoán | Yêu cầu chuyển sang người thật |
-| Ghi lại lỗi | Câu hỏi + kết quả | Lưu lỗi để xem lại | Danh sách lỗi lặp lại |
-
----
+| Thành phần                        | Nhận gì?                       | Làm gì?                                         | Trả ra gì?                                |
+|-----------------------------------|--------------------------------|-------------------------------------------------|-------------------------------------------|
+| Phân loại câu hỏi                | Câu hỏi người dùng             | Xác định câu hỏi có rủi ro cao hay không        | Trả lời hoặc yêu cầu kiểm tra nguồn      |
+| Nguồn chính thức                 | Chủ đề cần kiểm tra            | Lấy dữ liệu chính thức từ nguồn                | Thông tin và nguồn                       |
+| Bộ xử lý khi thiếu nguồn         | Kết quả không có dữ liệu       | Không cho AI đoán, chuyển sang người thật      | Yêu cầu chuyển sang người thật          |
+| Ghi lại lỗi                       | Câu hỏi + kết quả             | Lưu trữ lỗi để theo dõi và cải tiến sau        | Danh sách lỗi lặp lại                    |
 
 ## 3. Khi hệ thống gặp vấn đề
 
-| Khi nào lỗi xảy ra? | Hệ thống làm gì? | Người dùng thấy gì? |
-|---|---|---|
-| Nguồn chính thức không có dữ liệu | | |
-| Nguồn bị lỗi hoặc quá chậm | | |
-| Câu hỏi vượt phạm vi AI | | |
-| Lỗi này lặp lại nhiều lần | | |
-
----
+| Khi nào lỗi xảy ra?                        | Hệ thống làm gì?                                  | Người dùng thấy gì?              |
+|-------------------------------------------|---------------------------------------------------|----------------------------------|
+| Nguồn chính thức không có dữ liệu        | Yêu cầu chuyển sang người thật                   | Người dùng được thông báo chuyển sang tư vấn viên  |
+| Nguồn bị lỗi hoặc quá chậm               | Báo lỗi và yêu cầu cập nhật lại nguồn dữ liệu    | Thông báo lỗi và thông tin về trạng thái hiện tại |
+| Câu hỏi vượt phạm vi AI                  | Từ chối trả lời, hướng đến kênh hỗ trợ phù hợp   | Người dùng được hướng dẫn tới kênh phù hợp |
+| Lỗi này lặp lại nhiều lần                | Ghi lại lỗi và cải tiến quy trình                 | Người dùng không thấy gì, nhưng hệ thống cải thiện |
 
 ## 4. Kiểm tra nhanh
 
