@@ -1,8 +1,9 @@
 # Lớp kiến trúc dữ liệu
 
-**Tình huống xử lý**: T-01 
-Xem `../../1-map-and-format.md` Phần A.
-
+## 1. Rủi ro xử lý
+- **ID tình huống**: T-01.
+- **Mẫu lỗi**: AI tự ý bịa đặt hoặc đưa sai mốc thời gian hạn nộp hồ sơ xin học bổng, người dùng tin tưởng hoàn toàn dẫn đến nộp trễ đơn học bổng xét tuyển sớm.
+- **Hậu quả**: Thí sinh bị trượt học bổng oan do quá hạn nộp hồ sơ, gia đình thiệt hại tài chính lớn (lên tới hàng tỷ đồng), hình ảnh uy tín tuyển sinh của nhà trường bị khiếu kiện nghiêm trọng.
 ---
 
 ## 1. Giải pháp là gì?
