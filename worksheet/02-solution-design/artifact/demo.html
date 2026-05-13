@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Demo Hệ Thống Tuyển Sinh An Toàn - VinUni</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .container {
+            max-width: 1400px;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        .chat-widget {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 700px;
+        }
+        
+        .chat-header {
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+            color: white;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .chat-header h2 {
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .chat-body {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            background: #f8f9fa;
+        }
+
+        .message {
+            margin-bottom: 20px;
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .user-message {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 15px;
+            margin-left: 50px;
+            border-left: 4px solid #2196f3;
+        }
+        
+        .bot-message {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin-right: 50px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .highlight-card {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 15px 0;
+            border: 3px solid #ff4757;
+            box-shadow: 0 5px 20px rgba(255, 75, 87, 0.4);
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                box-shadow: 0 5px 20px rgba(255, 75, 87, 0.4);
+            }
+            50% {
+                box-shadow: 0 5px 30px rgba(255, 75, 87, 0.6);
+            }
+        }
+        
+        .highlight-card h3 {
+            font-size: 14px;
+            margin-bottom: 10px;
+            opacity: 0.9;
+        }
+        
+        .highlight-card .date {
+            font-size: 24px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+
+        .verified-badge {
+            background: #4caf50;
+            color: white;
+            padding: 12px 15px;
+            border-radius: 8px;
+            margin: 15px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 13px;
+        }
+        
+        .verified-badge::before {
+            content: "✓";
+            font-size: 20px;
+            font-weight: bold;
+        }
+        
+        .escalation-btn {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 18px 25px;
+            border: none;
+            border-radius: 12px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 15px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(245, 87, 108, 0.4);
+        }
+
+        .escalation-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(245, 87, 108, 0.6);
+        }
+        
+        .chat-input {
+            padding: 20px;
+            background: white;
+            border-top: 1px solid #e0e0e0;
+            display: flex;
+            gap: 10px;
+        }
+        
+        .chat-input input {
+            flex: 1;
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 25px;
+            font-size: 14px;
+            outline: none;
+            transition: border 0.3s;
+        }
+        
+        .chat-input input:focus {
+            border-color: #2196f3;
+        }
+        
+        .chat-input button {
+            background: #2196f3;
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .architecture-panel {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 30px;
+            overflow-y: auto;
+            height: 700px;
+        }
+        
+        .architecture-panel h2 {
+            color: #1e3c72;
+            margin-bottom: 20px;
+            font-size: 24px;
+        }
+        
+        .flow-diagram {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 12px;
+            margin: 20px 0;
+        }
+        
+        .flow-step {
+            background: white;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 8px;
+            border-left: 4px solid #2196f3;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .flow-step:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+        
+        .flow-step.active {
+            border-left-color: #4caf50;
+            background: #e8f5e9;
+            animation: highlight 1s ease-in-out;
+        }
+        
+        @keyframes highlight {
+            0%, 100% { background: white; }
+            50% { background: #e8f5e9; }
+        }
+        
+        .flow-step::after {
+            content: "↓";
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 20px;
+            color: #2196f3;
+        }
+        
+        .flow-step:last-child::after {
+            content: "";
+        }
+
+        .component-table {
+            width: 100%;
+            margin: 20px 0;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .component-table th {
+            background: #1e3c72;
+            color: white;
+            padding: 12px;
+            text-align: left;
+            font-size: 14px;
+        }
+        
+        .component-table td {
+            padding: 12px;
+            border-bottom: 1px solid #e0e0e0;
+            font-size: 13px;
+        }
+        
+        .component-table tr:hover {
+            background: #f5f5f5;
+        }
+        
+        .status-indicator {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .status-indicator.active {
+            background: #4caf50;
+            box-shadow: 0 0 10px #4caf50;
+        }
+        
+        .status-indicator.warning {
+            background: #ff9800;
+            box-shadow: 0 0 10px #ff9800;
+        }
+        
+        .status-indicator.error {
+            background: #f44336;
+            box-shadow: 0 0 10px #f44336;
+        }
+        
+        @media (max-width: 1200px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .demo-controls {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.3);
+        }
+        
+        .demo-controls button {
+            background: #4caf50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 5px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <!-- Chat Widget -->
+        <div class="chat-widget">
+            <div class="chat-header">
+                <h2>🏛️ TRỢ LÝ TUYỂN SINH THÔNG MINH - ĐẠI HỌC VINUNI</h2>
+                <div style="display: flex; gap: 10px;">
+                    <button style="background: none; border: none; color: white; cursor: pointer; font-size: 20px;">➖</button>
+                    <button style="background: none; border: none; color: white; cursor: pointer; font-size: 20px;">❌</button>
+                </div>
+            </div>
+            
+            <div class="chat-body" id="chatBody">
+                <div class="message">
+                    <div class="user-message">
+                        <strong>Học sinh:</strong> Hạn nộp hồ sơ học bổng VinUni 2026 là ngày nào thế bot ơi?
+                    </div>
+                </div>
+                
+                <div class="message">
+                    <div class="bot-message">
+                        <strong>Admissions-bot:</strong>
+                        <p>Chào bạn! Dưới đây là thông tin chính thức về thời hạn nộp hồ sơ xét tuyển học bổng kỳ Tuyển sinh sớm năm 2026:</p>
+
+                        <div class="highlight-card">
+                            <h3>🗓️ HẠN CHÓT NỘP HỒ SƠ HỌC BỔNG KỲ TUYỂN SINH SỚM:</h3>
+                            <div class="date">🎯 NGÀY 15 THÁNG 04 NĂM 2026</div>
+                            <div style="font-size: 14px; margin-top: 10px;">⏰ Lúc 23:59</div>
+                            <div style="margin-top: 15px; padding: 10px; background: rgba(255,255,255,0.2); border-radius: 8px;">
+                                ⚠️ <strong>LƯU Ý:</strong> Kỳ hạn này đã kết thúc. Bạn có muốn xem kế hoạch nộp hồ sơ của Kỳ Thường niên?
+                            </div>
+                        </div>
+                        
+                        <div class="verified-badge">
+                            🛡️ THÔNG TIN ĐÃ ĐƯỢC XÁC MINH<br>
+                            <small>Nguồn: Cổng tuyển sinh chính thức (vinhuni.edu.vn)<br>
+                            Đồng bộ lần cuối: Hôm nay bởi Hội đồng Tuyển sinh</small>
+                        </div>
+                        
+                        <hr style="margin: 20px 0; border: none; border-top: 2px dashed #e0e0e0;">
+                        
+                        <div style="text-align: center; margin: 15px 0;">
+                            <strong>🤔 BẠN CẦN XIN GIA HẠN THÊM HOẶC GẶP KHÓ KHĂN ĐẶC BIỆT?</strong>
+                        </div>
+
+                        <button class="escalation-btn" onclick="escalateToHuman()">
+                            📞 CHUYỂN CUỘC TRÒ CHUYỆN TỚI TƯ VẤN VIÊN TUYỂN SINH
+                            <br><small style="font-weight: normal;">(Kết nối trực tiếp Chuyên viên trong giờ hành chính)</small>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="chat-input">
+                <input type="text" placeholder="Nhập câu hỏi tuyển sinh của bạn..." id="userInput">
+                <button onclick="sendMessage()">➡️</button>
+            </div>
+        </div>
+        
+        <!-- Architecture Panel -->
+        <div class="architecture-panel">
+            <h2>🏗️ Kiến Trúc Hệ Thống Xử Lý An Toàn</h2>
+            
+            <div class="flow-diagram">
+                <h3 style="margin-bottom: 15px; color: #1e3c72;">Luồng Xử Lý Câu Hỏi</h3>
+                
+                <div class="flow-step" id="step1">
+                    <strong>1️⃣ Nhận Câu Hỏi Từ Người Dùng</strong>
+                    <p style="margin-top: 8px; color: #666;">Thí sinh/Phụ huynh gửi câu hỏi qua Widget Chat</p>
+                </div>
+
+                <div class="flow-step" id="step2">
+                    <strong>2️⃣ Phân Loại Ý Định (Intent Classifier)</strong>
+                    <p style="margin-top: 8px; color: #666;">Xác định câu hỏi có rủi ro cao không? (Hạn nộp, học phí, điểm chuẩn)</p>
+                </div>
+                
+                <div class="flow-step" id="step3">
+                    <strong>3️⃣ Kiểm Tra Nguồn Dữ Liệu Chính Thức</strong>
+                    <p style="margin-top: 8px; color: #666;">Truy vấn Database SQL chứa dữ liệu từ vinhuni.edu.vn</p>
+                    <div style="margin-top: 10px; padding: 10px; background: #fff3cd; border-radius: 6px; font-size: 12px;">
+                        <span class="status-indicator active"></span> Nguồn có sẵn → Tiếp tục<br>
+                        <span class="status-indicator error"></span> Nguồn thiếu/lỗi → Chuyển người thật
+                    </div>
+                </div>
+                
+                <div class="flow-step" id="step4">
+                    <strong>4️⃣ Sinh Câu Trả Lời Với Thẻ Highlight</strong>
+                    <p style="margin-top: 8px; color: #666;">AI trả lời kèm Badge xác minh + Highlight Card nổi bật</p>
+                </div>
+
+                <div class="flow-step" id="step5">
+                    <strong>5️⃣ Hiển Thị Nút Chuyển Tuyến Khẩn Cấp</strong>
+                    <p style="margin-top: 8px; color: #666;">Cung cấp nút kết nối Chuyên viên tuyển sinh thật</p>
+                </div>
+                
+                <div class="flow-step" id="step6">
+                    <strong>6️⃣ Ghi Log & Theo Dõi Lỗi</strong>
+                    <p style="margin-top: 8px; color: #666;">Lưu trữ câu hỏi + kết quả để cải tiến hệ thống</p>
+                </div>
+            </div>
+            
+            <h3 style="margin: 30px 0 15px 0; color: #1e3c72;">📊 Bảng Thành Phần Hệ Thống</h3>
+            <table class="component-table">
+                <thead>
+                    <tr>
+                        <th>Thành Phần</th>
+                        <th>Trạng Thái</th>
+                        <th>Chức Năng</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Intent Classifier</strong></td>
+                        <td><span class="status-indicator active"></span>Hoạt động</td>
+                        <td>Phân loại câu hỏi rủi ro cao</td>
+                    </tr>
+
+                    <tr>
+                        <td><strong>Official Data Source</strong></td>
+                        <td><span class="status-indicator active"></span>Đồng bộ</td>
+                        <td>Cung cấp dữ liệu chính thức</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Verification Badge</strong></td>
+                        <td><span class="status-indicator active"></span>Hiển thị</td>
+                        <td>Xác nhận nguồn tin cậy</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Highlight Card UI</strong></td>
+                        <td><span class="status-indicator active"></span>Kích hoạt</td>
+                        <td>Nổi bật thông tin quan trọng</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Escalation Button</strong></td>
+                        <td><span class="status-indicator active"></span>Sẵn sàng</td>
+                        <td>Chuyển tư vấn viên thật</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Error Logging</strong></td>
+                        <td><span class="status-indicator active"></span>Ghi nhận</td>
+                        <td>Theo dõi & cải tiến</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 style="margin: 30px 0 15px 0; color: #1e3c72;">⚠️ Xử Lý Khi Gặp Lỗi</h3>
+            <div style="background: #fff3cd; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                <strong>🔴 Nguồn không có dữ liệu:</strong> Chuyển ngay sang tư vấn viên thật
+            </div>
+            <div style="background: #f8d7da; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                <strong>🔴 Nguồn bị lỗi/chậm:</strong> Báo lỗi và yêu cầu cập nhật
+            </div>
+            <div style="background: #d1ecf1; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+                <strong>🔵 Câu hỏi vượt phạm vi:</strong> Hướng dẫn kênh hỗ trợ phù hợp
+            </div>
+            <div style="background: #d4edda; padding: 15px; border-radius: 8px;">
+                <strong>🟢 Lỗi lặp lại nhiều lần:</strong> Ghi log và cải tiến quy trình
+            </div>
+        </div>
+    </div>
+
+    <!-- Demo Controls -->
+    <div class="demo-controls">
+        <div style="margin-bottom: 10px; font-weight: bold; color: #1e3c72;">🎮 Demo Controls</div>
+        <button onclick="simulateFlow()">▶️ Mô phỏng luồng</button>
+        <button onclick="resetDemo()">🔄 Reset</button>
+    </div>
+
+    <script>
+        let currentStep = 0;
+        
+        function escalateToHuman() {
+            alert('🔄 Đang kết nối với Chuyên viên Tuyển sinh...\n\n✅ Bạn sẽ được chuyển đến tư vấn viên thật trong vài giây.\n\n📞 Vui lòng giữ máy!');
+            
+            // Highlight step 5
+            document.querySelectorAll('.flow-step').forEach(step => {
+                step.classList.remove('active');
+            });
+            document.getElementById('step5').classList.add('active');
+            
+            setTimeout(() => {
+                alert('✅ Đã kết nối thành công!\n\n👤 Chuyên viên Nguyễn Thị Mai đang sẵn sàng hỗ trợ bạn.');
+            }, 2000);
+        }
+
+        function simulateFlow() {
+            const steps = ['step1', 'step2', 'step3', 'step4', 'step5', 'step6'];
+            let index = 0;
+            
+            // Reset all steps
+            document.querySelectorAll('.flow-step').forEach(step => {
+                step.classList.remove('active');
+            });
+            
+            const interval = setInterval(() => {
+                if (index < steps.length) {
+                    document.getElementById(steps[index]).classList.add('active');
+                    index++;
+                } else {
+                    clearInterval(interval);
+                }
+            }, 800);
+        }
+        
+        function resetDemo() {
+            document.querySelectorAll('.flow-step').forEach(step => {
+                step.classList.remove('active');
+            });
+        }
+        
+        function sendMessage() {
+            const input = document.getElementById('userInput');
+            const message = input.value.trim();
+            
+            if (message) {
+                const chatBody = document.getElementById('chatBody');
+                const newMessage = document.createElement('div');
+                newMessage.className = 'message';
+                newMessage.innerHTML = `<div class="user-message"><strong>Bạn:</strong> ${message}</div>`;
+                chatBody.appendChild(newMessage);
+                
+                input.value = '';
+                chatBody.scrollTop = chatBody.scrollHeight;
+
+                // Simulate bot response
+                setTimeout(() => {
+                    const botMessage = document.createElement('div');
+                    botMessage.className = 'message';
+                    botMessage.innerHTML = `
+                        <div class="bot-message">
+                            <strong>Admissions-bot:</strong>
+                            <p>Cảm ơn bạn đã hỏi! Tôi đang kiểm tra thông tin từ nguồn chính thức...</p>
+                            <div class="verified-badge">
+                                🛡️ Đang xác minh dữ liệu từ vinhuni.edu.vn
+                            </div>
+                        </div>
+                    `;
+                    chatBody.appendChild(botMessage);
+                    chatBody.scrollTop = chatBody.scrollHeight;
+                    
+                    // Trigger flow simulation
+                    simulateFlow();
+                }, 1000);
+            }
+        }
+        
+        // Allow Enter key to send message
+        document.getElementById('userInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+        
+        // Auto-start demo on load
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                simulateFlow();
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
