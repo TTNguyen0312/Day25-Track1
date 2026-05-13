@@ -6,14 +6,22 @@ demo: ./demo.md
 
 # card.md — Lớp chỉ dẫn AI
 
-**Tình huống xử lý**: T-__  
+**Tình huống xử lý**: T-01, T-02, T-10 
 Xem `../../1-map-and-format.md` Phần A.
 
 ---
 
 ## 1. Giải pháp là gì?
 
-[Viết 2-3 câu. Nói rõ nhóm sẽ thêm luật, giới hạn hoặc ví dụ mẫu nào để AI trả lời an toàn hơn.]
+Khi người dùng hỏi deadline, học phí, học bổng, điểm chuẩn và quy đổi điểm thì AI chỉ được đưa thông tin cụ thể khi có dữ liệu chính thức từ website tuyển sinh hoặc RAG data đã xác minh. Khi trả lời, AI cũng cần trích dẫn nguồn để người dùng có thể nhanh chóng tự check lại.
+
+Nếu không tìm thấy nguồn phù hợp hoặc confidence thấp, AI phải:
+- nói rõ chưa có thông tin xác minh,
+- không tự suy đoán theo dữ liệu cũ,
+- hướng người dùng sang website chính thức hoặc tư vấn viên thật.
+
+Ngoài ra, nhóm thêm luật chống “pressure-trap” và “sycophancy”, ví dụ khi người dùng nói: “Em chỉ cần ước chừng thôi” hoặc “Chắc chắn em đậu đúng không?” thì AI phải giữ nguyên giới hạn an toàn, không chiều theo người dùng.
+
 
 Ví dụ:
 
@@ -23,19 +31,15 @@ Ví dụ:
 
 ## 2. Vì sao sửa ở lớp chỉ dẫn AI?
 
-[Chọn 1-2 ý đúng với giải pháp của nhóm.]
-
-- AI đang trả lời quá tự tin khi thiếu nguồn.
 - AI đang chiều theo giả định sai của người dùng.
 - AI cần luật rõ: khi nào trả lời, khi nào từ chối, khi nào chuyển sang người thật.
-- Có thể sửa nhanh bằng prompt trước khi thay đổi hệ thống lớn hơn.
 
 **Hành động phòng vệ chính**:
 
-- [ ] Ngăn câu trả lời sai ngay từ đầu
-- [ ] Bắt buộc nêu nguồn khi nói về thông tin quan trọng
-- [ ] Từ chối trả lời khi thiếu căn cứ
-- [ ] Chuyển người thật khi vượt phạm vi
+- [x] Ngăn câu trả lời sai ngay từ đầu
+- [x] Bắt buộc nêu nguồn khi nói về thông tin quan trọng
+- [x] Từ chối trả lời khi thiếu căn cứ
+- [x] Chuyển người thật khi vượt phạm vi
 
 ---
 
@@ -57,20 +61,29 @@ Demo cần có:
 
 **Có thể gây vấn đề gì?**
 
-[Ví dụ: AI từ chối quá nhiều, câu trả lời cứng, trải nghiệm chậm hơn vì phải kiểm tra nguồn.]
+- AI có thể từ chối quá nhiều nếu dữ liệu chưa cập nhật.
+- Câu trả lời có thể dài và cứng hơn vì phải kèm nguồn và cảnh báo.
+- Trải nghiệm chậm hơn do phải kiểm tra RAG source và confidence.
+- Người dùng có thể khó chịu khi AI không “đoán giúp”.
 
 **Nhóm giảm vấn đề đó bằng cách nào?**
 
-[Ví dụ: chỉ bắt buộc nguồn với thông tin rủi ro cao; tách từ chối mềm và từ chối cứng; kiểm tra lại bằng bộ tình huống.]
+- Chỉ bắt buộc source-check với thông tin rủi ro cao (deadline, học phí, học bổng, điểm chuẩn).
+- Dùng “từ chối mềm” thay vì block hoàn toàn:
+  > “Hiện mình chưa có dữ liệu xác minh cho năm 2026.”
+- Nếu có dữ liệu năm trước, AI được phép đưa để tham khảo nhưng phải gắn nhãn:
+  > “Thông tin năm trước — chưa phải công bố chính thức năm nay.”
+- Kết hợp escalation sang tư vấn viên khi confidence thấp.
+- Kiểm thử lại bằng bộ test T-01 → T-10 để tránh over-refusal.
 
 ---
 
 ## 5. Checklist trước khi nộp
 
-- [ ] Luật viết đủ cụ thể để AI làm theo.
-- [ ] Có mẫu câu khi AI không có đủ thông tin.
-- [ ] Có ví dụ cho tình huống dễ sai.
-- [ ] Có thử lại bằng tình huống trong Bài 1.
-- [ ] Không dùng prompt như cách duy nhất nếu lỗi nằm ở dữ liệu hoặc quy trình.
+- [x] Luật viết đủ cụ thể để AI làm theo.
+- [x] Có mẫu câu khi AI không có đủ thông tin.
+- [x] Có ví dụ cho tình huống dễ sai.
+- [x] Có thử lại bằng tình huống trong Bài 1.
+- [x] Không dùng prompt như cách duy nhất nếu lỗi nằm ở dữ liệu hoặc quy trình.
 
-**Người phụ trách**: [Tên thành viên]
+**Người phụ trách**: Hoàng Đức Nghĩa
