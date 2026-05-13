@@ -5,15 +5,35 @@ File này dùng để đặt sơ đồ và mô tả ngắn cách hệ thống gi
 
 ## 1. Sơ đồ cách hệ thống xử lý
 
-```text
-[User's question]
-  -> Classify the question
-  -> Is it a high-risk question?
-      -> No: AI answers as usual
-      -> Yes: Check official source
-          -> If data available: AI answers with the source
-          -> If no data: Transfer to human
-  -> Log the error for tracking
+```mermaid
+graph TD
+    %% Định nghĩa các node
+    User[Người dùng hỏi thông tin tuyển sinh]
+    Classifier{Phân loại câu hỏi<br>Kiểm tra độ rủi ro}
+    HighRisk{Câu hỏi rủi ro cao?}
+    OfficialSource{Kiểm tra nguồn chính thức}
+    DataAvailable{Dữ liệu có sẵn?}
+    AIAnswer{AI trả lời với nguồn}
+    TransferToHuman{Chuyển câu hỏi sang người thật}
+    ErrorLog{Ghi lại lỗi cho theo dõi}
+    NoData{Không có dữ liệu xác minh}
+    SourceUnavailable{Nguồn không sẵn có}
+    UserResponse[Trả lời người dùng hoặc chuyển sang người thật]
+
+    %% Vận hành cơ bản
+    User -->|1. Gửi câu hỏi| Classifier
+    Classifier -->|2. Phân loại câu hỏi| HighRisk
+    HighRisk -->|Câu hỏi rủi ro cao| OfficialSource
+    HighRisk -->|Câu hỏi bình thường| AIAnswer
+    OfficialSource -->|Kiểm tra nguồn chính thức| DataAvailable
+    DataAvailable -->|Dữ liệu có sẵn| AIAnswer
+    DataAvailable -->|Dữ liệu không có| TransferToHuman
+    AIAnswer -->|Trả lời với nguồn| UserResponse
+    TransferToHuman -->|Chuyển câu hỏi cho tư vấn viên| UserResponse
+    TransferToHuman -->|Ghi lại lỗi| ErrorLog
+    NoData -->|Không có dữ liệu xác minh| TransferToHuman
+    SourceUnavailable -->|Nguồn không sẵn có| TransferToHuman
+    ErrorLog -->|Theo dõi và cải tiến hệ thống| Classifier
 ```
 
 ## 2. Thành phần chính

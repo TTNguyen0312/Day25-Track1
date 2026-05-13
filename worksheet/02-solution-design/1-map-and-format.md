@@ -11,8 +11,8 @@ nop-cuoi: Có — file cuối Bài 2
 
 File này ghi lại quyết định chính của Bài 2:
 
-- **Rủi ro**: Khi AI bịa đặt thông tin hoặc cung cấp mốc thời gian sai cho hồ sơ xin học bổng, người dùng có thể tin tưởng hoàn toàn, dẫn đến việc nộp hồ sơ trễ.
-- **Nguyên nhân gốc**: AI đang tự đưa ra thông tin mà không kiểm tra nguồn, gây ra việc cung cấp dữ liệu không chính xác.
+- **Rủi ro**: Khi AI bịa đặt thông tin về điểm chuẩn năm nay khi thông tin chưa được công bố hoặc cung cấp mốc thời gian sai cho hồ sơ xin học bổng, người dùng có thể tin tưởng hoàn toàn, dẫn đến việc nộp hồ sơ trễ.
+- **Nguyên nhân gốc**: AI đang tự đưa ra thông tin không có trong RAG data, gây ra việc cung cấp dữ liệu không chính xác.
 - **Lớp giải pháp**: Xây dựng ba lớp giải pháp: Giao diện người dùng, Chỉ dẫn AI, và Kiến trúc dữ liệu.
 
 Ba lớp này bổ sung cho nhau, giúp giảm thiểu rủi ro từ mọi hướng.
