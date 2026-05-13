@@ -406,6 +406,15 @@
         <div class="architecture-panel">
             <h2>🏗️ Kiến Trúc Hệ Thống Xử Lý An Toàn</h2>
             
+            <div style="background: #e3f2fd; padding: 15px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #2196f3;">
+                <strong>📋 Lớp Giải Pháp Tích Hợp:</strong>
+                <ul style="margin: 10px 0 0 20px; line-height: 1.8;">
+                    <li><strong>Lớp 1:</strong> UI/UX - Highlight Card + Verification Badge + Escalation Button</li>
+                    <li><strong>Lớp 2:</strong> Prompt Engineering - Luật chống hallucination + Source citation</li>
+                    <li><strong>Lớp 3:</strong> Data Architecture - Official source validation + Error logging</li>
+                </ul>
+            </div>
+            
             <div class="flow-diagram">
                 <h3 style="margin-bottom: 15px; color: #1e3c72;">Luồng Xử Lý Câu Hỏi</h3>
                 
@@ -501,6 +510,44 @@
             <div style="background: #d4edda; padding: 15px; border-radius: 8px;">
                 <strong>🟢 Lỗi lặp lại nhiều lần:</strong> Ghi log và cải tiến quy trình
             </div>
+            
+            <h3 style="margin: 30px 0 15px 0; color: #1e3c72;">🤖 Luật Chỉ Dẫn AI (Prompt Layer)</h3>
+            <div style="background: #f8f9fa; padding: 20px; border-radius: 12px; border: 2px solid #1e3c72;">
+                <div style="margin-bottom: 15px;">
+                    <strong style="color: #d32f2f;">❌ AI KHÔNG ĐƯỢC:</strong>
+                    <ul style="margin: 10px 0 0 20px; line-height: 1.8;">
+                        <li>Nêu ngày, số tiền, điểm chuẩn nếu không có nguồn chính thức</li>
+                        <li>Xác nhận giả định sai của người dùng</li>
+                        <li>Cam kết "chắc chắn đậu" hoặc "chắc chắn có học bổng"</li>
+                        <li>Dùng dữ liệu cũ mà không cảnh báo</li>
+                        <li>Tư vấn sức khỏe, pháp lý, tài chính cá nhân</li>
+                    </ul>
+                </div>
+                <div style="margin-top: 15px;">
+                    <strong style="color: #388e3c;">✅ AI BẮT BUỘC:</strong>
+                    <ul style="margin: 10px 0 0 20px; line-height: 1.8;">
+                        <li>Trích dẫn nguồn khi trả lời thông tin quan trọng</li>
+                        <li>Nói rõ "chưa có thông tin xác minh" khi thiếu nguồn</li>
+                        <li>Gắn nhãn "Thông tin tham khảo năm trước" nếu dùng dữ liệu cũ</li>
+                        <li>Chuyển tư vấn viên khi confidence thấp hoặc vượt phạm vi</li>
+                        <li>Giữ nguyên giới hạn an toàn dù người dùng "ép" đoán</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <h3 style="margin: 30px 0 15px 0; color: #1e3c72;">💬 Ví Dụ Hỏi Đáp An Toàn</h3>
+            <div style="background: white; padding: 15px; border-radius: 8px; margin-bottom: 10px; border-left: 4px solid #4caf50;">
+                <strong>👤 User:</strong> "Em nghe nói hạn nộp là 30/3 đúng không?"<br>
+                <strong>🤖 AI:</strong> "Mình chưa thể xác nhận thông tin đó nếu chưa có nguồn chính thức. Bạn nên kiểm tra trên website tuyển sinh để tránh nhầm lẫn."
+            </div>
+            <div style="background: white; padding: 15px; border-radius: 8px; margin-bottom: 10px; border-left: 4px solid #4caf50;">
+                <strong>👤 User:</strong> "Ước chừng thôi cũng được, khoảng bao nhiêu điểm?"<br>
+                <strong>🤖 AI:</strong> "Mình không thể ước chừng về điểm chuẩn vì có thể gây hiểu lầm. Bạn nên xem điểm chuẩn chính thức của các năm trước để tham khảo."
+            </div>
+            <div style="background: white; padding: 15px; border-radius: 8px; border-left: 4px solid #ff9800;">
+                <strong>👤 User:</strong> "Em stress quá, có nên uống thuốc giảm cân không?"<br>
+                <strong>🤖 AI:</strong> "Mình không thể tư vấn về thuốc hoặc sức khỏe. Nếu bạn đang căng thẳng, hãy trao đổi với bác sĩ hoặc chuyên gia tâm lý."
+            </div>
         </div>
     </div>
 
@@ -508,6 +555,7 @@
     <div class="demo-controls">
         <div style="margin-bottom: 10px; font-weight: bold; color: #1e3c72;">🎮 Demo Controls</div>
         <button onclick="simulateFlow()">▶️ Mô phỏng luồng</button>
+        <button onclick="testPromptRules()">🧪 Test Prompt</button>
         <button onclick="resetDemo()">🔄 Reset</button>
     </div>
 
@@ -551,6 +599,67 @@
             document.querySelectorAll('.flow-step').forEach(step => {
                 step.classList.remove('active');
             });
+        }
+        
+        function testPromptRules() {
+            const chatBody = document.getElementById('chatBody');
+            
+            // Test case 1: User tries to get AI to guess
+            const testMessage1 = document.createElement('div');
+            testMessage1.className = 'message';
+            testMessage1.innerHTML = `
+                <div class="user-message">
+                    <strong>Test Case:</strong> Em nghe nói hạn nộp là 30/3 đúng không?
+                </div>
+            `;
+            chatBody.appendChild(testMessage1);
+            
+            setTimeout(() => {
+                const botResponse1 = document.createElement('div');
+                botResponse1.className = 'message';
+                botResponse1.innerHTML = `
+                    <div class="bot-message">
+                        <strong>Admissions-bot:</strong>
+                        <p>❌ <strong>Không xác nhận giả định sai</strong></p>
+                        <p>Mình chưa thể xác nhận thông tin đó nếu chưa có nguồn chính thức. Deadline tuyển sinh có thể thay đổi theo từng năm và từng chương trình.</p>
+                        <div class="verified-badge">
+                            🛡️ Bạn nên kiểm tra trên website tuyển sinh chính thức để tránh nhầm lẫn
+                        </div>
+                    </div>
+                `;
+                chatBody.appendChild(botResponse1);
+                chatBody.scrollTop = chatBody.scrollHeight;
+            }, 1000);
+            
+            // Test case 2: Out of scope question
+            setTimeout(() => {
+                const testMessage2 = document.createElement('div');
+                testMessage2.className = 'message';
+                testMessage2.innerHTML = `
+                    <div class="user-message">
+                        <strong>Test Case:</strong> Em stress quá, có nên uống thuốc giảm cân không?
+                    </div>
+                `;
+                chatBody.appendChild(testMessage2);
+                chatBody.scrollTop = chatBody.scrollHeight;
+            }, 2000);
+            
+            setTimeout(() => {
+                const botResponse2 = document.createElement('div');
+                botResponse2.className = 'message';
+                botResponse2.innerHTML = `
+                    <div class="bot-message">
+                        <strong>Admissions-bot:</strong>
+                        <p>⚠️ <strong>Vượt phạm vi AI</strong></p>
+                        <p>Mình không thể tư vấn về thuốc hoặc sức khỏe. Nếu bạn đang căng thẳng hoặc mệt mỏi kéo dài, hãy trao đổi với bác sĩ, chuyên gia tâm lý hoặc người hỗ trợ phù hợp.</p>
+                        <button class="escalation-btn" onclick="escalateToHuman()">
+                            📞 KẾT NỐI TƯ VẤN VIÊN HỖ TRỢ
+                        </button>
+                    </div>
+                `;
+                chatBody.appendChild(botResponse2);
+                chatBody.scrollTop = chatBody.scrollHeight;
+            }, 3000);
         }
         
         function sendMessage() {
