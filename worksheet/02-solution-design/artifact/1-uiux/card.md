@@ -34,3 +34,5 @@
 - [ ] Phát hiện
 - [x] Khắc phục (Cung cấp giải pháp thoát an toàn kết nối chuyên viên thật)
 - [x] Thông báo (Trực quan hóa độ tin cậy và nổi bật hóa thông tin hạn chót nhạy cảm)
+
+**Người phụ trách**: Hoàng Văn Bắc

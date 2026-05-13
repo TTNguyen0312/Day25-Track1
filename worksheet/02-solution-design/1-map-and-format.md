@@ -1,6 +1,6 @@
 ---
-artifact: 1 — FINAL kế hoạch giải pháp
-bai-tap: 2 — Thiết kế giải pháp
+artifact: 1 - FINAL kế hoạch giải pháp
+bai-tap: 2 - Thiết kế giải pháp
 phase: Chọn rủi ro + chọn tầng + chọn demo + chốt 3 lớp giải pháp
 time: 11:00-11:55
 input: 00-context.md + 01-test-set-review/3-FINAL-test-set-eval-plan.md
@@ -17,7 +17,7 @@ File này ghi lại quyết định chính của Bài 2:
 
 Ba lớp này bổ sung cho nhau, giúp giảm thiểu rủi ro từ mọi hướng.
 
-## Phần A — Chọn rủi ro và tầng giải pháp
+## Phần A - Chọn rủi ro và tầng giải pháp
 
 ### Rủi ro chính được chọn
 - **ID tình huống**: T-01
@@ -40,15 +40,23 @@ Ba lớp này bổ sung cho nhau, giúp giảm thiểu rủi ro từ mọi hư�
 | Người dùng tin quá mức | Giao diện cảnh báo / cách viết mức tin cậy | `1-uiux` là chính |
 
 ### 10 tầng giải pháp tham khảo
-| Tầng | Khi nào dùng |
-|---|---|
-| Giao diện | Người dùng tin AI quá mức, thiếu cảnh báo, thiếu nguồn, thiếu nút chuyển sang người thật |
-| Chỉ dẫn AI | AI đoán khi không biết, không hỏi lại, không từ chối |
-| Quy trình xử lý | Cần phân loại ý định, chuyển đúng nơi xử lý, có cách xử lý khi AI không nên trả lời |
+
+| Tầng                    | Khi nào dùng                                                                 |
+|--------------------------|-----------------------------------------------------------------------------|
+| **Giao diện**             | Người dùng tin AI quá mức, thiếu cảnh báo, thiếu nguồn, thiếu nút chuyển sang người thật  |
+| **Chỉ dẫn AI**            | AI đoán khi không biết, không hỏi lại, không từ chối                                |
+| **Quy trình xử lý**       | Cần phân loại ý định, chuyển đúng nơi xử lý, có cách xử lý khi AI không nên trả lời   |
+| **Dữ liệu / tra cứu nguồn (RAG)** | Thiếu nguồn đúng, nguồn cũ, AI không dựa vào nguồn đáng tin cậy                           |
+| **Theo dõi**              | Lỗi lặp lại sau khi ra mắt nhưng không ai thấy                                        |
+| **Chính sách / thông báo giới hạn** | Người dùng không biết giới hạn của AI                                                |
+| **Người duyệt / phê duyệt** | Tình huống pháp lý, y tế, tài chính, tuyển dụng, hoặc tác động lớn                      |
+| **Vai trò trách nhiệm**   | Có cảnh báo nhưng không ai chịu trách nhiệm xử lý                                      |
+| **Vòng phản hồi**         | Cần người dùng / người rà báo lỗi để cập nhật hệ thống                                |
+| **Kiến trúc lai**         | LLM một mình không đủ, cần rule, classifier, hoặc nhiều bước kiểm tra                |
 
 ---
 
-## Phần B — Chọn định dạng demo
+## Phần B - Chọn định dạng demo
 
 | Lớp | Thư mục | Định dạng demo chọn | Thời gian dự kiến |
 |---|---|---|---|
@@ -58,9 +66,9 @@ Ba lớp này bổ sung cho nhau, giúp giảm thiểu rủi ro từ mọi hư�
 
 ---
 
-## Phần C — Ba lớp giải pháp
+## Phần C - Ba lớp giải pháp
 
-### Lớp 1 — Giao diện (`artifact/1-uiux/`)
+### Lớp 1 - Giao diện (`artifact/1-uiux/`)
 
 - **Cách tiếp cận**: Sử dụng màu sắc nổi bật để cảnh báo người dùng khi thông tin có nguy cơ sai lệch hoặc chưa được xác minh. Cung cấp nút bấm chuyển sang người thật khi cần thiết.
 - **Hành động phòng vệ bao phủ**: Thông báo, Phát hiện, Khắc phục
@@ -72,9 +80,9 @@ Ba lớp này bổ sung cho nhau, giúp giảm thiểu rủi ro từ mọi hư�
 - **Cách tiếp cận**: Áp dụng quy tắc rõ ràng cho AI để từ chối hoặc yêu cầu xác nhận thêm từ người dùng khi không đủ dữ liệu.
 - **Hành động phòng vệ bao phủ**: Ngăn, Từ chối, Dẫn nguồn
 - **Demo**: Bản Markdown mô phỏng các prompt cùng ví dụ
-- **Trạng thái**: Đang làm
+- **Trạng thái**: Xong
 
-### Lớp 3 — Kiến trúc dữ liệu (`artifact/3-architecture/`)
+### Lớp 3 - Kiến trúc dữ liệu (`artifact/3-architecture/`)
 
 - **Cách tiếp cận**: Kiểm tra nguồn dữ liệu chính thức trước khi trả lời, và chuyển câu hỏi đến người thật nếu nguồn không có dữ liệu hợp lệ.
 - **Hành động phòng vệ bao phủ**: Ngăn, Phát hiện, Khắc phục

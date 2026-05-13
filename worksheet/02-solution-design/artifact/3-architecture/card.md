@@ -57,4 +57,4 @@
 - [x] Có cách chuyển sang người thật với tình huống rủi ro cao.
 - [x] Có cách biết lỗi này có đang lặp lại không.
 
-**Người phụ trách**: [Tên thành viên]
+**Người phụ trách**: Nguyễn Trọng Tiến
